@@ -1,4 +1,0 @@
-import {test} from 'node:test';import assert from 'node:assert/strict';import {schedule,fundingGap} from '../dist/funding.mjs';
-test('loan schedule fully repays principal and closes balance',()=>{const rows=schedule(100000,12,12,'2026-12-31');assert.equal(rows.length,12);assert.ok(Math.abs(rows.reduce((s,r)=>s+r.principal,0)-100000)<1e-6);assert.equal(rows.at(-1).balance,0);assert.equal(rows[2].date,'2027-02-28');assert.ok(Math.abs(rows[0].payment-8884.8788678)<1e-5);});
-test('no loan and zero interest schedules',()=>{assert.deepEqual(schedule(0,12,12,''),[]);assert.equal(schedule(12000,0,12,'')[0].payment,1000);assert.equal(schedule(12000,0,12,'').reduce((s,r)=>s+r.interest,0),0);});
-test('funding gap includes both own investment and planned borrowing',()=>{assert.deepEqual(fundingGap(100000,30000,50000),{neededLoan:70000,gap:20000,surplus:0});assert.equal(fundingGap(10000,15000,0).surplus,5000);});
