@@ -12,7 +12,7 @@ A buildless responsive rural-business planning app. Serve `dist/` over HTTP, e.g
 `npm test`. Financial formulas documented in the application. EMI reference: https://www.axis.bank.in/calculators/emi-calculator ; break-even reference: https://legacy.sba.gov/business-guide/plan-your-business/calculate-your-startup-costs/break-even-point . Household buffer is arithmetic, not lender eligibility. No taxes/fees/depreciation/working-capital changes included.
 
 ## Deployment
-Publish `dist/` as a static site on any host. Vercel settings are tracked in `vercel.json`: Other framework, `npm test` build check, `dist` output, no dependency installation. No credentials belong in source control.
+Publish `dist/` as a static site on any host. Sites identity is in `.openai/hosting.json`; use a new identity if creating an independent Site. No credentials belong in source control.
 
 ## Intended business and resource-reuse assessment
 The user submits a business category, a plan description, skill, available capital and existing assets. Twenty business templates include core assets and illustrative startup and unit-economics assumptions. Submitted profiles are snapshots, so editing an unsubmitted resource form does not silently change an assessment. Selecting an alternative loads its assumptions and clears the previous business's observed demand/competitor inputs.
