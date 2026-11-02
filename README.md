@@ -1,106 +1,28 @@
-# 🌾 Grameen Advisor
+# Grameen Advisor
+A buildless responsive rural-business planning app. Serve `dist/` over HTTP, e.g. `python3 -m http.server 8080 --directory dist`. No install or API keys required.
 
-<p align="center">
-  <strong>AI-driven hyper-local business advisory and financial structuring for rural micro-entrepreneurs.</strong>
-</p>
+## Features
+- Original CSS/SVG village illustration, subtle 3D depth, reduced-motion support.
+- Explainable rule-based opportunity matching; all setup budgets explicitly illustrative.
+- Real Indian postal lookup via api.postalpincode.in, post-office selection, locality geocoding via Nominatim and embedded OpenStreetMap. Services can fail, rate-limit or block browser requests; failures never manufacture a verified location. External services receive submitted location queries. PIN areas are not exact addresses. No verified live competitor counts.
+- EMI, zero-interest loan handling, total interest, operating break-even, monthly profit, cash after EMI, household buffer and sales scenarios. Pure math module with independent amortization tests.
+- Downloadable planning worksheet, official government portal links.
 
-<p align="center">
-  React · TypeScript · Tailwind CSS · Drizzle ORM · AI Provider Layer
-</p>
+## Validation
+`npm test`. Financial formulas documented in the application. EMI reference: https://www.axis.bank.in/calculators/emi-calculator ; break-even reference: https://legacy.sba.gov/business-guide/plan-your-business/calculate-your-startup-costs/break-even-point . Household buffer is arithmetic, not lender eligibility. No taxes/fees/depreciation/working-capital changes included.
 
-## Overview
+## Deployment
+Publish `dist/` as a static site on any host. Vercel settings are tracked in `vercel.json`: Other framework, `npm test` build check, `dist` output, no dependency installation. No credentials belong in source control.
 
-Grameen Advisor helps aspiring and rural entrepreneurs turn available assets, skills, capital and local context into structured business opportunities. The platform combines opportunity discovery, local-market analysis, financial modelling and government-scheme guidance in one workflow.
+## Intended business and resource-reuse assessment
+The user submits a business category, a plan description, skill, available capital and existing assets. Twenty business templates include core assets and illustrative startup and unit-economics assumptions. Submitted profiles are snapshots, so editing an unsubmitted resource form does not silently change an assessment. Selecting an alternative loads its assumptions and clears the previous business's observed demand/competitor inputs.
 
-Built for **Smart India Hackathon 2026**, the project focuses on explainable recommendations rather than presenting AI output as guaranteed business advice.
+Local market signals use an explicit user-triggered Overpass API request within 3 km of the selected approximate post-office locality. OpenStreetMap entries are incomplete, may be old and can include separate representations of a single business. Unsupported categories have no mapped count; zero results never mean no competition. Location changes discard old mapped results and late responses. Raw counts are not probabilities or growth forecasts.
 
-## ✨ Key Features
+Transparent caution rules flag missing core assets, budget gaps, nonpositive contribution margins, obtainable monthly sales below operating break-even, or at least five reported/mapped similar-business signals. The competition threshold is an illustrative heuristic; it does not establish saturation. Manual and map counts are never summed. No live demand, revenue, customer capacity or growth dataset is claimed.
 
-- Multi-step entrepreneur, location, skill and asset assessment
-- Explainable asset-to-business opportunity scoring
-- Business ecosystem and multiple revenue-stream visualisation
-- Google Places competition analysis with labelled demo fallback
-- Market-gap analysis and personalised SWOT
-- Deterministic EMI, affordability, break-even and scenario calculations
-- Retrieval-grounded government-scheme guidance with source status
-- Configurable OpenAI, Gemini and Anthropic provider layer
-- English, Hindi and Kannada interface support
-- Responsive UI with accessible animations
+Alternatives reuse at least one selected asset and rank using 3 points per reused asset, minus 4 per missing asset, plus 3 for a skill match, 2 for a budget fit, and 4 per reused asset also required by the intended business. Missing assets/training/capital are displayed. These are resource-fit suggestions, not proof of a better market. Free-text descriptions/notes are preserved, not AI-interpreted. For reliable local advice, enter field observations and validate each alternative with buyers.
 
-## 🛠️ Tech Stack
 
-| Area | Technology |
-| --- | --- |
-| Frontend | React, TypeScript, Tailwind CSS |
-| Runtime / App layer | Vinext, Vite |
-| UI & Motion | Framer Motion, component libraries |
-| Data | Drizzle ORM, relational SQL migrations |
-| Validation | Zod |
-| Market Data | Google Places API adapter |
-| AI | Configurable LLM provider and RAG architecture |
-| Testing | Node test runner |
-
-## 🧠 How It Works
-
-1. The entrepreneur provides location, skills, assets and available capital.
-2. The platform evaluates potential business opportunities using explainable scoring.
-3. Market and competition information adds local context.
-4. Financial tools model affordability, EMI, break-even and scenarios.
-5. Scheme guidance and supporting information help the user explore possible next steps.
-
-## 🚀 Local Setup
-
-```bash
-npm install
-cp .env.example .env.local
-npm run dev
-```
-
-The application supports a clearly labelled **Demo Mode** when external provider keys are not configured.
-
-### Environment
-
-```env
-AI_PROVIDER=demo
-AI_API_KEY=
-AI_MODEL=
-AI_BASE_URL=
-GOOGLE_MAPS_API_KEY=
-```
-
-Never expose provider keys through frontend environment variables.
-
-## 🧪 Testing
-
-```bash
-node --test tests/domain.test.mjs
-npm run build
-```
-
-## 🏗️ Architecture
-
-Detailed architecture documentation is available in [ARCHITECTURE.md](ARCHITECTURE.md).
-
-## ⚠️ Advisory Notice
-
-Opportunity scores and financial projections are prototype advisory outputs, not guarantees. Government-scheme eligibility and approval should be confirmed with the relevant authority or financial institution. Demo competition data is not represented as live data.
-
-## 🏆 Smart India Hackathon 2026
-
-Built for the problem statement:
-
-> **AI-Driven Hyper-Local Business Advisory and Financial Structuring Assistant for Rural Micro-Entrepreneurs.**
-
-## 💡 What This Project Demonstrates
-
-- AI-assisted product development with explicit fallback behaviour
-- Explainable recommendation workflows
-- Financial modelling separated from generative AI
-- External API integration
-- Relational data modelling
-- Multilingual and responsive interface design
-- Responsible presentation of advisory outputs
-
-## 👨‍💻 Author
-
-**Krish M. Jadhav**
+## Five-step village-user flow
+Home starts a one-step-at-a-time wizard: idea, resources, local market, finances, recommendations. Next/Back preserves current form fields. Twenty rural-business categories include cow/buffalo dairy, poultry, goat rearing, kirana, flour milling, repairs, handicrafts, seed supplies and compost. A custom idea has its own name and customer-entered required resources. Custom resource rows record name, quantity and category; simple normalized names match custom requirements. Quantities are recorded but do not establish production capacity. Custom unit-economics examples are explicitly placeholders to replace with customer prices and costs. No AI model interprets free text. Resource quantities and market notes are included in the downloaded worksheet.
